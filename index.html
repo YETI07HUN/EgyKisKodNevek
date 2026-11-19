@@ -56,7 +56,7 @@ button:disabled{color:#808080;text-shadow:1px 1px 0 #fff;cursor:default}
 </div>
 <div id="lobby" class="v">
  <h1 id="lt"></h1>
- <div class="card"><div id="lp" class="cols"></div>
+ <div class="card"><div id="lme" class="sunk"></div><div id="lp" class="cols"></div>
   <div class="row"><button onclick="swap()">Csapatváltás</button>
   <button id="spybtn" onclick="spy()">Kémfőnök leszek</button>
   <button id="start" onclick="startReq()">Játék indítása</button>
@@ -89,14 +89,13 @@ const $=i=>document.getElementById(i);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const me=localStorage.pid||(localStorage.pid=crypto.randomUUID());
 $('nick').value=localStorage.nick||'';
-let room,hb,pi,mp,gs,cur='',lastSig='';
-function view(id){if(cur!=id){cur=id;lastSig=''}['menu','lobby','game'].forEach(s=>$(s).style.display=s==id?'flex':'none')}
+let room,hb,pi,mp,gs,cur='',lastSig='',hideEnd=false,endSig='';
+function view(id){if(cur!=id){cur=id;lastSig=''}['menu','lobby','game'].forEach(s=>$(s).style.display=s==id?'flex':'none');if(id!='game'){$('end').style.display='none';hideEnd=false;endSig=''}}
 const nick=()=>{const n=$('nick').value.trim()||'Játékos'+Math.floor(Math.random()*900+100);localStorage.nick=n;return n};
 async function rpc(f,a){const {data,error}=await sb.rpc(f,a);if(error){alert(error.message);return null}return data??true}
 view('menu');
 
 // ---------- Szobalista ----------
-let hideEnd=false,endSig='';
 async function lst(){
  const {data,error}=await sb.rpc('cn_list_rooms');
  if(error){$('rl').innerHTML='<p style="color:#ff5d5d">Hiba: '+esc(error.message)+'</p>';return}
@@ -136,9 +135,10 @@ async function poll(){
 // ---------- Lobby ----------
 function renderLobby(s,r){
  const pl=s.players,t=[0,1].map(x=>pl.filter(p=>p.team==x)),isHost=r.host_id==me;
- $('lt').textContent=`${r.name} · ${pl.length} játékos`;
- const col=x=>`<div><b style="color:${x?'#0000c0':'#c00000'}">${x?'Kék':'Piros'} csapat (${t[x].length})</b>${t[x].map(p=>`<div class=p style="border-color:${x?'#3b78e7':'#d9434a'}">${esc(p.nick)}${p.spy?' [KÉMFŐNÖK]':''}${p.player_id==r.host_id?' [HOST]':''}${p.afk?' [AFK]':''}</div>`).join('')}</div>`;
+ $('lt').textContent=`Lobby: ${r.name} (${pl.length} játékos)`;
+ const col=x=>`<div><b style="color:${x?'#0000c0':'#c00000'}">${x?'Kék':'Piros'} csapat (${t[x].length})</b>${t[x].map(p=>`<div class=p style="border-color:${x?'#3b78e7':'#d9434a'}">${p.player_id==me?`<b>${esc(p.nick)} (te)</b>`:esc(p.nick)}${p.spy?' [KÉMFŐNÖK]':''}${p.player_id==r.host_id?' [HOST]':''}${p.afk?' [AFK]':''}</div>`).join('')}</div>`;
  $('lp').innerHTML=col(0)+col(1);
+ $('lme').innerHTML=`Te vagy: <b>${esc(mp.nick)}</b> · ${mp.team?'Kék':'Piros'} csapat${mp.spy?' · kémfőnök':''}${r.host_id==me?' · host':''}`;
  $('spybtn').textContent=mp.spy?'Lemondok a kémfőnökségről':'Kémfőnök leszek';
  const ok=t[0].length>=2&&t[1].length>=2;
  $('start').style.display=isHost?'':'none';$('start').disabled=!ok;
