@@ -3,22 +3,255 @@
 <html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kódnevek</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#161a24;color:#e8ecf5;font:15px system-ui,sans-serif}
-.v{display:none;flex-direction:column;align-items:center;gap:12px;padding:20px;min-height:100vh}
-.card{background:#1f2533;border:1px solid #2f3750;border-radius:12px;padding:16px;width:min(760px,100%)}
-h1{margin:6px 0;color:#4da3ff}h3{margin:0 0 10px}
-input,select,button{font:inherit;padding:8px 10px;border-radius:8px;border:1px solid #3a4460;background:#12151f;color:inherit}
-button{background:#4da3ff;color:#06101f;border:0;font-weight:700;cursor:pointer}button:disabled{opacity:.4;cursor:default}
-.row{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}.row>input{flex:1;min-width:0}
-.r{display:flex;gap:10px;align-items:center;padding:8px;border-bottom:1px solid #2a3248}.r b{flex:1}
-.p{padding:6px 10px;margin:4px 0;border-left:4px solid #888;background:#12151f;border-radius:6px}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-#grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
-.t{height:74px;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px;background:#e9e2d0;color:#222;border-radius:8px;border:4px solid transparent;font-weight:700;text-transform:uppercase;font-size:clamp(10px,2.3vw,15px);cursor:pointer;user-select:none;word-break:break-word}
-.vr{background:#d9434a;color:#fff;cursor:default}.vb{background:#3b78e7;color:#fff;cursor:default}
-.vn{background:#8f8670;color:#fff;cursor:default}.vx{background:#000;color:#fff;border-color:#ff5d5d;cursor:default}
-.sr{border-color:#d9434a}.sb{border-color:#3b78e7}.sn{border-color:#8f8670}.sx{background:#3a3a3a;color:#fff;border-color:#000}
-#score{font-weight:700;font-size:18px;margin-bottom:6px}#info{font-size:17px;margin:4px 0}#me{color:#8d97b3}
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #20242b;
+    color: #e5e7eb;
+    font: 15px Arial, Helvetica, sans-serif;
+}
+
+.v {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 28px 18px;
+    min-height: 100vh;
+}
+
+h1 {
+    margin: 8px 0;
+    color: #e5e7eb;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: .3px;
+}
+
+h3 {
+    margin: 0 0 14px;
+    color: #d5d9e0;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.card {
+    width: min(760px, 100%);
+    padding: 20px;
+    background: #292e37;
+    border: 1px solid #393f49;
+    border-radius: 9px;
+}
+
+input,
+select,
+button {
+    font: inherit;
+    padding: 10px 12px;
+    border-radius: 6px;
+}
+
+input,
+select {
+    background: #20242b;
+    color: #e5e7eb;
+    border: 1px solid #454c58;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #7b9cc5;
+}
+
+button {
+    border: 1px solid #6d8fb8;
+    background: #6d8fb8;
+    color: #101820;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+}
+
+button:hover:not(:disabled) {
+    background: #86a5ca;
+    border-color: #86a5ca;
+}
+
+button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.row {
+    display: flex;
+    gap: 9px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+.row > input {
+    flex: 1;
+    min-width: 0;
+}
+
+.r {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 11px 4px;
+    border-bottom: 1px solid #3b414b;
+}
+
+.r:last-child {
+    border-bottom: none;
+}
+
+.r b {
+    flex: 1;
+}
+
+.p {
+    padding: 9px 12px;
+    margin: 6px 0;
+    background: #20242b;
+    border-left: 3px solid #777;
+    border-radius: 4px;
+}
+
+.cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 9px;
+}
+
+.t {
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    background: #e5dfce;
+    color: #292820;
+    border: 3px solid transparent;
+    border-radius: 5px;
+    text-align: center;
+    font-size: clamp(10px, 2.3vw, 15px);
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+    word-break: break-word;
+    transition: border-color .15s, filter .15s;
+}
+
+.t:hover:not(.vr):not(.vb):not(.vn):not(.vx) {
+    filter: brightness(1.08);
+}
+
+.vr {
+    background: #bd5156;
+    color: white;
+    cursor: default;
+}
+
+.vb {
+    background: #4979b5;
+    color: white;
+    cursor: default;
+}
+
+.vn {
+    background: #898477;
+    color: white;
+    cursor: default;
+}
+
+.vx {
+    background: #252525;
+    color: white;
+    border-color: #bd5156;
+    cursor: default;
+}
+
+.sr {
+    border-color: #bd5156;
+}
+
+.sb {
+    border-color: #4979b5;
+}
+
+.sn {
+    border-color: #898477;
+}
+
+.sx {
+    background: #444;
+    color: white;
+    border-color: #222;
+}
+
+#score {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+#info {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+#me {
+    color: #a0a7b4;
+    font-size: 14px;
+}
+
+#hint {
+    margin-top: 8px;
+}
+
+@media (max-width: 550px) {
+    .v {
+        padding: 18px 12px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .cols {
+        gap: 10px;
+    }
+
+    #grid {
+        gap: 5px;
+    }
+
+    .t {
+        min-height: 62px;
+        padding: 3px;
+        font-size: 10px;
+    }
+
+    .row {
+        gap: 7px;
+    }
+
+    .row button {
+        font-size: 13px;
+    }
+}
 </style></head><body>
 <div id="menu" class="v">
  <h1>🕵️ Kódnevek</h1>
