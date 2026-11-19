@@ -1,165 +1,646 @@
 <!DOCTYPE html>
-<html lang="hu"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kódnevek</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#008080;color:#000;font:13px Tahoma,Verdana,sans-serif}
-.v{display:none;flex-direction:column;align-items:center;gap:14px;padding:18px;min-height:100vh}
-h1{margin:4px 0;color:#fff;font:bold 36px 'Courier New',monospace;letter-spacing:4px;text-shadow:3px 3px 0 #000}
-.card,.win{background:#c0c0c0;border:2px solid;border-color:#fff #404040 #404040 #fff;box-shadow:2px 2px 0 #000}
-.card{padding:10px;width:min(760px,100%)}
-.card h3{background:#000080;color:#fff;margin:-10px -10px 10px;padding:3px 8px;font-size:13px}
-input,select{font:inherit;padding:4px 6px;background:#fff;color:#000;border:2px solid;border-color:#404040 #fff #fff #404040;border-radius:0}
-button{font:inherit;padding:5px 14px;background:#c0c0c0;color:#000;border:2px solid;border-color:#fff #404040 #404040 #fff;border-radius:0;box-shadow:1px 1px 0 #000;cursor:pointer}
-button:active:not(:disabled){border-color:#404040 #fff #fff #404040;padding:6px 13px 4px 15px}
-button:disabled{color:#808080;text-shadow:1px 1px 0 #fff;cursor:default}
-.row{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap;align-items:center}.row>input{flex:1;min-width:0}
-#rl,.sunk{background:#fff;border:2px solid;border-color:#404040 #fff #fff #404040;min-height:34px}
-.r{display:flex;gap:10px;align-items:center;padding:5px 8px;border-bottom:1px dotted #808080}.r b{flex:1}
-#rl p{margin:8px}
-.p{padding:3px 8px;margin:3px 0;border-left:6px solid #888;background:#fff}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-/* játék közbeni ablakok */
-#gw{display:grid;grid-template-columns:210px minmax(0,1fr) 210px;gap:14px;width:min(1120px,100%);align-items:start}
-.win{padding:3px}
-.wt{display:flex;justify-content:space-between;gap:8px;background:#808080;color:#c0c0c0;font-weight:bold;padding:3px 6px}
-.win.on .wt{color:#fff}.win.red.on .wt{background:#a00000}.win.blue.on .wt{background:#000080}
-.wbody{padding:8px}
-.big{font:bold 46px 'Courier New',monospace;text-align:center;background:#000;border:2px solid;border-color:#404040 #fff #fff #404040;margin-bottom:8px}
-.red .big{color:#ff3b3b}.blue .big{color:#4aa3ff}
-.m{background:#fff;border:1px solid #808080;padding:3px 6px;margin:4px 0}.m small{display:block;color:#404040;font-size:11px}
-.m.sp{border-left:5px solid #000;font-weight:bold}
-.sunk{padding:6px 8px;margin-bottom:8px;font:bold 15px 'Courier New',monospace}
-#grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;padding:8px;background:#006060;border:2px solid;border-color:#404040 #fff #fff #404040}
-.t{height:72px;display:flex;align-items:center;justify-content:center;text-align:center;padding:2px;background:#f2ead3;color:#1a1a1a;border:2px solid;border-color:#fff #6b6450 #6b6450 #fff;box-shadow:2px 2px 0 #000;font:bold clamp(10px,2vw,15px) 'Courier New',monospace;text-transform:uppercase;cursor:pointer;user-select:none;word-break:break-word}
-.t:hover{background:#fff8e0}
-.vr,.vr:hover{background:#b3262c;color:#fff}.vb,.vb:hover{background:#1f4fc4;color:#fff}
-.vn,.vn:hover{background:#8f8670;color:#fff}.vx,.vx:hover{background:#000;color:#fff}
-.vr,.vb,.vn,.vx{cursor:default;border-color:#000;box-shadow:none;transform:translate(2px,2px)}
-.sr{box-shadow:inset 0 0 0 4px #b3262c,2px 2px 0 #000}.sb{box-shadow:inset 0 0 0 4px #1f4fc4,2px 2px 0 #000}
-.sn{box-shadow:inset 0 0 0 4px #8f8670,2px 2px 0 #000}.sx,.sx:hover{background:#333;color:#fff;box-shadow:inset 0 0 0 4px #000,2px 2px 0 #000}
-@media(max-width:860px){#gw{grid-template-columns:1fr 1fr}#wm{grid-column:1/3;order:3}}
-</style></head><body>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at 10% 20%, #283447 0, transparent 30%),
+        radial-gradient(circle at 90% 80%, #292d38 0, transparent 35%),
+        #141820;
+    color: #e5e7eb;
+    font: 15px Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "🔎";
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    font-size: 65px;
+    opacity: .13;
+    transform: rotate(-20deg);
+    pointer-events: none;
+}
+
+body::after {
+    content: "🕵️";
+    position: fixed;
+    bottom: -12px;
+    left: -12px;
+    font-size: 100px;
+    opacity: .17;
+    transform: rotate(8deg);
+    pointer-events: none;
+}
+
+.v {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 28px 20px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    margin: 8px 0 15px;
+    color: #d7b978;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+h1::before {
+    content: "✦ ";
+    color: #a88c53;
+}
+
+h3 {
+    margin: 0 0 14px;
+    color: #d7b978;
+    font-family: Georgia, serif;
+    font-size: 18px;
+}
+
+.card {
+    width: min(760px, 100%);
+    padding: 20px;
+    background: rgba(31, 37, 48, .96);
+    border: 1px solid #414959;
+    border-top: 3px solid #a88c53;
+    border-radius: 4px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .25);
+    position: relative;
+}
+
+input,
+select {
+    font: inherit;
+    padding: 10px 12px;
+    border-radius: 3px;
+    border: 1px solid #505969;
+    background: #181e28;
+    color: #e5e7eb;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #c4a66a;
+}
+
+button {
+    font: inherit;
+    padding: 10px 14px;
+    border: 1px solid #a88c53;
+    border-radius: 3px;
+    background: #a88c53;
+    color: #171a20;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+}
+
+button:hover:not(:disabled) {
+    background: #c4a66a;
+}
+
+button:disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+.row {
+    display: flex;
+    gap: 9px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+.row > input {
+    flex: 1;
+    min-width: 0;
+}
+
+.r {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 5px;
+    border-bottom: 1px dashed #454b57;
+}
+
+.r:last-child {
+    border-bottom: none;
+}
+
+.r b {
+    flex: 1;
+}
+
+.p {
+    padding: 10px;
+    margin: 6px 0;
+    background: #191f29;
+    border-left: 3px solid #a88c53;
+    border-radius: 2px;
+}
+
+.cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 9px;
+}
+
+.t {
+    height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+    background: #d8cdb1;
+    color: #292820;
+    border-radius: 3px;
+    border: 3px solid #a99c7e;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: clamp(10px, 2.3vw, 15px);
+    cursor: pointer;
+    user-select: none;
+    word-break: break-word;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, .2);
+    transition: .15s;
+}
+
+.t:hover:not(.vr):not(.vb):not(.vn):not(.vx) {
+    transform: translateY(-3px);
+    background: #eee3c8;
+}
+
+.vr {
+    background: #b94c50;
+    color: white;
+    border-color: #8e363b;
+    cursor: default;
+}
+
+.vb {
+    background: #426fa8;
+    color: white;
+    border-color: #315780;
+    cursor: default;
+}
+
+.vn {
+    background: #77766c;
+    color: white;
+    border-color: #5d5c55;
+    cursor: default;
+}
+
+.vx {
+    background: #171717;
+    color: white;
+    border-color: #b94c50;
+    cursor: default;
+}
+
+.sr {
+    border-color: #d9434a;
+}
+
+.sb {
+    border-color: #3b78e7;
+}
+
+.sn {
+    border-color: #8f8670;
+}
+
+.sx {
+    background: #414141;
+    color: white;
+    border-color: #111;
+}
+
+#score {
+    font-weight: bold;
+    font-size: 19px;
+    margin-bottom: 9px;
+    letter-spacing: .4px;
+}
+
+#info {
+    font-size: 17px;
+    margin: 5px 0;
+    color: #e2d2a9;
+}
+
+#me {
+    color: #9ca6b5;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+#hint {
+    color: #9ca6b5;
+    margin-top: 10px;
+}
+
+@media (max-width: 550px) {
+    .v {
+        padding: 20px 12px;
+        gap: 12px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .card {
+        padding: 14px;
+    }
+
+    .cols {
+        gap: 10px;
+    }
+
+    #grid {
+        gap: 5px;
+    }
+
+    .t {
+        height: 62px;
+        font-size: 10px;
+        padding: 3px;
+    }
+
+    .row {
+        gap: 6px;
+    }
+
+    .row button {
+        font-size: 12px;
+        padding: 9px;
+    }
+
+    body::before {
+        font-size: 40px;
+        right: 8px;
+    }
+
+    body::after {
+        font-size: 65px;
+    }
+}
+</style>
+</head>
+
+<body>
+
 <div id="menu" class="v">
- <h1>KÓDNEVEK</h1>
+ <h1>🕵️ Kódnevek</h1>
  <div class="card"><h3>Becenév</h3><input id="nick" maxlength="14" placeholder="Becenév" style="width:100%"></div>
  <div class="card"><h3>Szoba hosztolása</h3>
   <div class="row"><input id="rname" maxlength="24" placeholder="Szoba neve"><button onclick="host()">Létrehozás</button></div></div>
  <div class="card"><h3>Nyilvános szobák</h3><div id="rl"></div></div>
 </div>
+
 <div id="lobby" class="v">
  <h1 id="lt"></h1>
  <div class="card"><div id="lp" class="cols"></div>
   <div class="row"><button onclick="swap()">Csapatváltás</button>
-  <button onclick="spy()">Kémfőnök leszek</button>
+  <button onclick="spy()">🕵️ Kémfőnök leszek</button>
   <button id="start" onclick="startReq()">Játék indítása</button>
-  <button onclick="leave()">Kilépés</button></div>
-  <div id="hint" style="color:#404040"></div></div>
+  <button onclick="leave()" style="background:#ff5d5d">Kilépés</button></div>
+  <div id="hint" style="color:#8d97b3"></div></div>
 </div>
+
 <div id="game" class="v">
- <div id="gw">
-  <div class="win red" id="wr"><div class="wt"><span>PIROS CSAPAT</span><span id="ar"></span></div>
-   <div class="wbody"><div class="big" id="nr">0</div><div id="mr"></div></div></div>
-  <div class="win" id="wm"><div class="wt" style="background:#000080;color:#fff"><span id="gt">Kódnevek</span><span id="me"></span></div>
-   <div class="wbody"><div id="info" class="sunk"></div><div id="grid"></div>
-    <div id="ctl" class="row"></div>
-    <div class="row"><button onclick="leave()">Kilépés</button></div></div></div>
-  <div class="win blue" id="wbl"><div class="wt"><span>KÉK CSAPAT</span><span id="ab"></span></div>
-   <div class="wbody"><div class="big" id="nb">0</div><div id="mb"></div></div></div>
- </div>
+ <div class="card"><div id="score"></div><div id="info"></div><div id="me"></div></div>
+ <div class="card"><div id="grid"></div></div>
+ <div class="card"><div id="ctl" class="row" style="margin:0"></div>
+  <div class="row"><button onclick="leave()" style="background:#ff5d5d">Kilépés</button></div></div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+
 <script>
 // ====== ÁLLÍTSD BE: Supabase > Project Settings > API ======
 const SUPABASE_URL='https://caiqxmozigmqqwzhrmfw.supabase.co';
 const SUPABASE_KEY='sb_publishable_2TDXI7icBqW4qzAq78m1dg_2pgPWLuJ';
 // ===========================================================
+
 const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const $=i=>document.getElementById(i);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';');
 const me=localStorage.pid||(localStorage.pid=crypto.randomUUID());
 $('nick').value=localStorage.nick||'';
+
 let room,hb,pi,mp,gs,cur='',lastSig='';
-function view(id){if(cur!=id){cur=id;lastSig=''}['menu','lobby','game'].forEach(s=>$(s).style.display=s==id?'flex':'none')}
-const nick=()=>{const n=$('nick').value.trim()||'Játékos'+Math.floor(Math.random()*900+100);localStorage.nick=n;return n};
-async function rpc(f,a){const {data,error}=await sb.rpc(f,a);if(error){alert(error.message);return null}return data??true}
+
+function view(id){
+ if(cur!=id){
+  cur=id;
+  lastSig='';
+ }
+ ['menu','lobby','game'].forEach(s=>$(s).style.display=s==id?'flex':'none');
+}
+
+const nick=()=>{
+ const n=$('nick').value.trim()||'Játékos'+Math.floor(Math.random()*900+100);
+ localStorage.nick=n;
+ return n;
+};
+
+async function rpc(f,a){
+ const {data,error}=await sb.rpc(f,a);
+ if(error){
+  alert(error.message);
+  return null;
+ }
+ return data??true;
+}
+
 view('menu');
 
 // ---------- Szobalista ----------
+
 async function lst(){
  const {data,error}=await sb.rpc('cn_list_rooms');
- if(error){$('rl').innerHTML='<p style="color:#ff5d5d">Hiba: '+esc(error.message)+'</p>';return}
- $('rl').innerHTML=(data||[]).map(r=>`<div class=r><b>${esc(r.name)}</b><span>${r.n}/6</span><button ${r.n>=6?'disabled':''} onclick="join('${r.id}')">Belépés</button></div>`).join('')||'<p style="color:#404040">Nincs nyilvános szoba – hosztolj egyet!</p>';
-}
-setInterval(()=>{if(!room)lst()},2000);lst();
-async function host(){const id=await rpc('cn_create_room',{p_name:$('rname').value||nick()+' szobája',p_host:me,p_nick:nick()});if(id)enter(id)}
-async function join(id){if(await rpc('cn_join_room',{p_room:id,p_player:me,p_nick:nick()}))enter(id)}
-function enter(id){
- room=id;view('lobby');
- hb=setInterval(()=>sb.rpc('cn_heartbeat',{p_room:room,p_player:me}).then(()=>{}),5000);
- pi=setInterval(poll,1000);poll();
-}
-async function leave(m){
- const r=room;room=null;clearInterval(hb);clearInterval(pi);
- if(r)await sb.rpc('cn_leave',{p_room:r,p_player:me});
- view('menu');if(m)alert(m);lst();
+
+ if(error){
+  $('rl').innerHTML='<p style="color:#ff5d5d">Hiba: '+esc(error.message)+'</p>';
+  return;
+ }
+
+ $('rl').innerHTML=(data||[]).map(r=>
+  `<div class=r><b>${esc(r.name)}</b><span>${r.n}/6</span><button ${r.n>=6?'disabled':''} onclick="join('${r.id}')">Belépés</button></div>`
+ ).join('')||'<p style="color:#8d97b3">Nincs nyilvános szoba – hosztolj egyet!</p>';
 }
 
-// ---------- Állapot lekérdezése (másodpercenként) ----------
+setInterval(()=>{
+ if(!room)lst();
+},2000);
+
+lst();
+
+async function host(){
+ const id=await rpc('cn_create_room',{
+  p_name:$('rname').value||nick()+' szobája',
+  p_host:me,
+  p_nick:nick()
+ });
+ if(id)enter(id);
+}
+
+async function join(id){
+ if(await rpc('cn_join_room',{
+  p_room:id,
+  p_player:me,
+  p_nick:nick()
+ }))enter(id);
+}
+
+function enter(id){
+ room=id;
+ view('lobby');
+ hb=setInterval(()=>{
+  sb.rpc('cn_heartbeat',{
+   p_room:room,
+   p_player:me
+  }).then(()=>{});
+ },5000);
+
+ pi=setInterval(poll,1000);
+ poll();
+}
+
+async function leave(m){
+ const r=room;
+ room=null;
+ clearInterval(hb);
+ clearInterval(pi);
+
+ if(r)await sb.rpc('cn_leave',{
+  p_room:r,
+  p_player:me
+ });
+
+ view('menu');
+ if(m)alert(m);
+ lst();
+}
+
+// ---------- Állapot lekérdezése ----------
+
 async function poll(){
- const {data:s,error}=await sb.rpc('cn_state',{p_room:room,p_player:me});
+ const {data:s,error}=await sb.rpc('cn_state',{
+  p_room:room,
+  p_player:me
+ });
+
  if(!room)return;
- if(error){$('hint').textContent='Hiba: '+error.message;return}
+
+ if(error){
+  $('hint').textContent='Hiba: '+error.message;
+  return;
+ }
+
  const r=s.room;
+
  if(!r||r.age>30)return leave('A szoba megszűnt (a host kilépett).');
+
  mp=s.players.find(p=>p.player_id==me);
+
  if(!mp)return leave('Kikerültél a szobából.');
+
  gs=s.game;
- if(r.status=='playing'&&gs){view('game');renderGame(r,s)}else{view('lobby');renderLobby(s,r)}
+
+ if(r.status=='playing'&&gs){
+  view('game');
+  renderGame(r);
+ }else{
+  view('lobby');
+  renderLobby(s,r);
+ }
 }
 
 // ---------- Lobby ----------
+
 function renderLobby(s,r){
- const pl=s.players,t=[0,1].map(x=>pl.filter(p=>p.team==x)),isHost=r.host_id==me;
+ const pl=s.players;
+ const t=[0,1].map(x=>pl.filter(p=>p.team==x));
+ const isHost=r.host_id==me;
+
  $('lt').textContent=`${r.name} · ${pl.length}/6`;
- const col=x=>`<div><b style="color:${x?'#0000c0':'#c00000'}">${x?'Kék':'Piros'} csapat (${t[x].length}/3)</b>${t[x].map(p=>`<div class=p style="border-color:${x?'#3b78e7':'#d9434a'}">${esc(p.nick)}${p.spy?' [KÉMFŐNÖK]':''}${p.player_id==r.host_id?' [HOST]':''}</div>`).join('')}</div>`;
+
+ const col=x=>`
+ <div>
+  <b style="color:${x?'#6ea1ff':'#ff6b72'}">${x?'Kék':'Piros'} csapat (${t[x].length}/3)</b>
+  ${t[x].map(p=>`
+   <div class=p style="border-color:${x?'#3b78e7':'#d9434a'}">
+    ${esc(p.nick)}${p.spy?' 🕵️':''}${p.player_id==r.host_id?' 👑':''}
+   </div>
+  `).join('')}
+ </div>`;
+
  $('lp').innerHTML=col(0)+col(1);
+
  const ok=t[0].length>=2&&t[1].length>=2;
- $('start').style.display=isHost?'':'none';$('start').disabled=!ok;
- $('hint').textContent=isHost?(ok?'Indulhat! Ha egy csapatnak nincs kémfőnöke, a rendszer sorsol.':'Mindkét csapatban legalább 2 játékos kell.'):'Várakozás a host indítására…';
+
+ $('start').style.display=isHost?'':'none';
+ $('start').disabled=!ok;
+
+ $('hint').textContent=isHost?
+  (ok?'Indulhat! Ha egy csapatnak nincs kémfőnöke, a rendszer sorsol.':'Mindkét csapatban legalább 2 játékos kell.')
+  :'Várakozás a host indítására…';
 }
-const swap=async()=>{if(await rpc('cn_set_team',{p_room:room,p_player:me,p_team:1-mp.team}))poll()};
-const spy=async()=>{if(await rpc('cn_set_spy',{p_room:room,p_player:me}))poll()};
-const startReq=async()=>{if(await rpc('cn_start',{p_room:room,p_host:me}))poll()};
+
+const swap=async()=>{
+ if(await rpc('cn_set_team',{
+  p_room:room,
+  p_player:me,
+  p_team:1-mp.team
+ }))poll();
+};
+
+const spy=async()=>{
+ if(await rpc('cn_set_spy',{
+  p_room:room,
+  p_player:me
+ }))poll();
+};
+
+const startReq=async()=>{
+ if(await rpc('cn_start',{
+  p_room:room,
+  p_host:me
+ }))poll();
+};
 
 // ---------- Játék ----------
-function renderGame(r,s){
- const g=gs,over=g.winner!=null,mine=mp.team==g.turn,isHost=r.host_id==me;
- $('gt').textContent='Kódnevek – '+r.name;
- $('me').textContent=(mp.spy?'kémfőnök':'találgató')+' · '+(mp.team?'kék':'piros');
- [['r',0,g.red,'wr'],['b',1,g.blue,'wbl']].forEach(([k,t,n,w])=>{
-  const on=g.turn==t&&!over;
-  $(w).classList.toggle('on',on);
-  $('a'+k).textContent=on?'◄ KÖRÖN':'';
-  $('n'+k).textContent=n;
-  $('m'+k).innerHTML=s.players.filter(p=>p.team==t).map(p=>`<div class="m${p.spy?' sp':''}">${esc(p.nick)}${p.player_id==me?' (te)':''}<small>${p.spy?'KÉMFŐNÖK':'találgató'}</small></div>`).join('')});
- $('info').innerHTML=over?`A ${g.winner?'KÉK':'PIROS'} CSAPAT NYERT!`:g.phase=='clue'?`${g.turn?'A kék':'A piros'} kémfőnök nyomot ad…`:`NYOM: <b>${esc(g.clue)}</b> – ${g.num} &nbsp;(még ${g.left} tipp)`;
- $('grid').innerHTML=g.words.map((w,i)=>{const c=g.col[i];return `<div class="t ${g.rev[i]?'v'+c:c?'s'+c:''}" data-i=${i}>${c=='x'?'☠ ':''}${esc(w)}</div>`}).join('');
+
+function renderGame(r){
+ const g=gs;
+ const over=g.winner!=null;
+ const mine=mp.team==g.turn;
+ const isHost=r.host_id==me;
+
+ const act=t=>g.turn==t&&!over?'▶ ':'';
+
+ $('score').innerHTML=`
+ <span style="color:#ff6b72">${act(0)}Piros: ${g.red} maradt</span>
+ &nbsp;·&nbsp;
+ <span style="color:#6ea1ff">${act(1)}Kék: ${g.blue} maradt</span>`;
+
+ $('info').innerHTML=over?
+  `🏆 ${g.winner?'KÉK':'PIROS'} csapat nyert!`:
+  g.phase=='clue'?
+   `${g.turn?'Kék':'Piros'} kémfőnök nyomot ad…`:
+   `Nyom: <b>${esc(g.clue)}</b> – ${g.num} · még ${g.left} tipp`;
+
+ $('me').textContent=`Te: ${mp.spy?'🕵️ kémfőnök':'találgató'} · ${mp.team?'kék':'piros'} csapat`;
+
+ $('grid').innerHTML=g.words.map((w,i)=>{
+  const c=g.col[i];
+  return `<div class="t ${g.rev[i]?'v'+c:c?'s'+c:''}" data-i=${i}>${c=='x'?'☠ ':''}${esc(w)}</div>`;
+ }).join('');
+
  const sig=[g.turn,g.phase,over,mp.spy,mp.team,isHost].join();
- if(sig!=lastSig){lastSig=sig;let h='';
-  if(!over&&mine&&g.phase=='clue'&&mp.spy)h=`<input id=cw maxlength=30 placeholder="Egy szavas nyom"><select id=cnum>${[0,1,2,3,4,5,6,7,8,9].map(n=>`<option>${n}</option>`).join('')}</select><button onclick="clue()">Nyom küldése</button>`;
-  else if(!over&&mine&&g.phase=='guess'&&!mp.spy)h='<button onclick="pass()">Kör befejezése</button><span>Kattints egy kártyára a tippeléshez</span>';
-  if(isHost)h+=`<button onclick="newGame()">${over?'Új játék':'Vissza a lobbiba'}</button>`;
-  $('ctl').innerHTML=h}
+
+ if(sig!=lastSig){
+  lastSig=sig;
+  let h='';
+
+  if(!over&&mine&&g.phase=='clue'&&mp.spy){
+   h=`<input id=cw maxlength=30 placeholder="Egy szavas nyom">
+   <select id=cnum>${[0,1,2,3,4,5,6,7,8,9].map(n=>`<option>${n}</option>`).join('')}</select>
+   <button onclick="clue()">Nyom küldése</button>`;
+  }
+  else if(!over&&mine&&g.phase=='guess'&&!mp.spy){
+   h='<button onclick="pass()">Kör befejezése</button><span style="color:#8d97b3">Kattints egy kártyára a tippeléshez</span>';
+  }
+
+  if(isHost){
+   h+=`<button onclick="newGame()" style="background:#ffd24d">${over?'Új játék':'Vissza a lobbiba'}</button>`;
+  }
+
+  $('ctl').innerHTML=h;
+ }
 }
-async function clue(){const w=$('cw').value.trim();if(w&&await rpc('cn_clue',{p_room:room,p_player:me,p_word:w,p_num:+$('cnum').value}))poll()}
-const pass=async()=>{if(await rpc('cn_pass',{p_room:room,p_player:me}))poll()};
-const newGame=async()=>{if(await rpc('cn_end',{p_room:room,p_host:me}))poll()};
-$('grid').onclick=async e=>{
- const t=e.target.closest('.t');if(!t||!gs)return;const g=gs,i=+t.dataset.i;
- if(g.winner!=null||g.phase!='guess'||mp.spy||mp.team!=g.turn||g.rev[i])return;
- if(await rpc('cn_guess',{p_room:room,p_player:me,p_idx:i}))poll();
+
+async function clue(){
+ const w=$('cw').value.trim();
+
+ if(w&&await rpc('cn_clue',{
+  p_room:room,
+  p_player:me,
+  p_word:w,
+  p_num:+$('cnum').value
+ }))poll();
+}
+
+const pass=async()=>{
+ if(await rpc('cn_pass',{
+  p_room:room,
+  p_player:me
+ }))poll();
 };
-addEventListener('beforeunload',()=>{if(room)sb.rpc('cn_leave',{p_room:room,p_player:me}).then(()=>{})});
-</script></body></html>
+
+const newGame=async()=>{
+ if(await rpc('cn_end',{
+  p_room:room,
+  p_host:me
+ }))poll();
+};
+
+$('grid').onclick=async e=>{
+ const t=e.target.closest('.t');
+
+ if(!t||!gs)return;
+
+ const g=gs;
+ const i=+t.dataset.i;
+
+ if(g.winner!=null||g.phase!='guess'||mp.spy||mp.team!=g.turn||g.rev[i])return;
+
+ if(await rpc('cn_guess',{
+  p_room:room,
+  p_player:me,
+  p_idx:i
+ }))poll();
+};
+
+addEventListener('beforeunload',()=>{
+ if(room){
+  sb.rpc('cn_leave',{
+   p_room:room,
+   p_player:me
+  }).then(()=>{});
+ }
+});
+</script>
+
+</body>
+</html>
